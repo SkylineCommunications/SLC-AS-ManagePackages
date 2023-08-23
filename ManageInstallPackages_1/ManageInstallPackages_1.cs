@@ -1,21 +1,21 @@
 namespace ManageInstallPackages_1
 {
-    using System;
-    using System.IO;
-    using ManageInstallPackages_1.PackageOverview;
+	using System;
+	using System.IO;
+	using ManageInstallPackages_1.PackageOverview;
 	using ManageInstallPackages_1.UploadWindow;
 	using ManageInstallPackages_1.View;
-    using Newtonsoft.Json;
-    using NuGet.Versioning;
-    using Skyline.DataMiner.Automation;
-    using Skyline.DataMiner.Net.Messages;
-    using Skyline.DataMiner.Utils.InteractiveAutomationScript;
-    using Skyline.DataMiner.Utils.Packages;
+	using Newtonsoft.Json;
+	using NuGet.Versioning;
+	using Skyline.DataMiner.Automation;
+	using Skyline.DataMiner.Net.Messages;
+	using Skyline.DataMiner.Utils.InteractiveAutomationScript;
+	using Skyline.DataMiner.Utils.Packages;
 
-    /// <summary>
-    /// Represents a DataMiner Automation script.
-    /// </summary>
-    public class Script
+	/// <summary>
+	/// Represents a DataMiner Automation script.
+	/// </summary>
+	public class Script
 	{
 		private InteractiveController controller;
 
@@ -119,6 +119,26 @@ namespace ManageInstallPackages_1
 				var filter = JsonConvert.DeserializeObject<PackageInfo>(input);
 				if (filter != null)
 				{
+					if (string.IsNullOrWhiteSpace(filter.Name))
+					{
+						filter.Name = "*";
+					}
+
+					if (filter.Version == null)
+					{
+						filter.Version = new SemanticVersion(0, 0, 0);
+					}
+
+					if (string.IsNullOrWhiteSpace(filter.OS))
+					{
+						filter.OS = "*";
+					}
+
+					if (string.IsNullOrWhiteSpace(filter.Arch))
+					{
+						filter.Arch = "*";
+					}
+
 					return filter;
 				}
 			}
