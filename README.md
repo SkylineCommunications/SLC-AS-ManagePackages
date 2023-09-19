@@ -16,7 +16,7 @@ An example of a filter that will show all packages starting with 'cassandra' and
 ```json
 {"name":"cassandra*","version":"0.0.0"}
 ```
-or
+An example of a filter that will show all packages with the name 'reaper' that are for Debian based system with an 'x86_64' architecture:
 ```json
 {"arch":"x86_64","name":"reaper","system":"Debian"}
 ```
