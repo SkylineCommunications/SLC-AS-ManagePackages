@@ -30,7 +30,7 @@ namespace ManageInstallPackages_1
 			controller = new InteractiveController(engine);
 			engine.Timeout = new TimeSpan(1, 0, 0);
 
-			PackageInfo filter = GetFilterFromInput(engine.GetScriptParam("Filter").Value);
+			PackageInfo filter = GetFilterFromInput(engine, engine.GetScriptParam("Filter").Value);
 			string folderPath = @"C:\Skyline DataMiner\Documents\DMA_COMMON_DOCUMENTS\InstallPackages";
 
 			try
@@ -112,7 +112,7 @@ namespace ManageInstallPackages_1
 			engine.GenerateInformation(message);
 		}
 
-		private PackageInfo GetFilterFromInput(string input)
+		private PackageInfo GetFilterFromInput(IEngine engine, string input)
 		{
 			try
 			{
@@ -142,9 +142,9 @@ namespace ManageInstallPackages_1
 					return filter;
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				// Do nothing
+				engine.GenerateInformation($"Failed to parse input filter: {ex}");
 			}
 
 			return new PackageInfo("*", new SemanticVersion(0, 0, 0), "*", "*");

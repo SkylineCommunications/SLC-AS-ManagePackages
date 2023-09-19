@@ -40,7 +40,7 @@
 			{
 				var checkbox = new CheckBox();
 				checkbox.Tooltip = row.Key;
-				checkbox.Checked += OnCheck;
+				checkbox.Changed += OnChange;
 				AddWidget(checkbox, rowcount, 0);
 				for (int i = 0; i < row.Value.Length; i++)
 				{
@@ -51,7 +51,7 @@
 			}
 		}
 
-		private void OnCheck(object sender, EventArgs e)
+		private void OnChange(object sender, EventArgs e)
 		{
 			engine.GenerateInformation("Triggered CheckBox");
 			var checkbox = sender as CheckBox;
