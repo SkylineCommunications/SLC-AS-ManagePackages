@@ -3,19 +3,20 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
-	using ManageInstallPackages_1.Extensions;
-	using Skyline.DataMiner.Automation;
-	using Skyline.DataMiner.Utils.Packages;
+    using System.Text.RegularExpressions;
+    using ManageInstallPackages_1.Extensions;
+    using Skyline.DataMiner.Automation;
+	using Skyline.DataMiner.Utils.SoftwareBundle;
 
 	internal class ManagePackageController
 	{
 		private readonly ManagePackagesView view;
 		private readonly IEngine engine;
 		private readonly string folderPath;
-		private readonly PackageInfo filter;
-		private Dictionary<string, PackageInfo> packages;
+		private readonly SoftwareBundleInfo filter;
+		private Dictionary<string, SoftwareBundleInfo> packages;
 
-		public ManagePackageController(IEngine engine, ManagePackagesView view, string folderPath, PackageInfo filter)
+		public ManagePackageController(IEngine engine, ManagePackagesView view, string folderPath, SoftwareBundleInfo filter)
 		{
 			this.view = view;
 			this.engine = engine;
@@ -32,7 +33,7 @@
 
 		public void RetrievePackagesFromFolder()
 		{
-			packages = new Dictionary<string, PackageInfo>();
+			packages = new Dictionary<string, SoftwareBundleInfo>();
 			string[] packageNameFolders = Directory.GetDirectories(folderPath);
 			foreach (string packageFolder in packageNameFolders)
 			{
@@ -41,7 +42,7 @@
 				{
 					try
 					{
-						var packageInfo = Packages.GetUnZippedPackage(packageVersionFolder).PackageInfo;
+						var packageInfo = SoftwareBundles.GetUnZippedSoftwareBundle(packageVersionFolder).SoftwareBundleInfo;
 						if (MatchesFilter(packageInfo))
 						{
 							packages[packageVersionFolder] = packageInfo;
@@ -72,7 +73,7 @@
 			var folders = view.GetSelectedPackages();
 			foreach (var folder in folders)
 			{
-				var unzipped = Packages.GetUnZippedPackage(folder);
+				var unzipped = SoftwareBundles.GetZippedSoftwareBundle(folder);
 				engine.GenerateInformation($"Deleting {folder}");
 				unzipped.Delete();
 			}
@@ -80,9 +81,9 @@
 			RetrievePackagesFromFolder();
 		}
 
-		private bool MatchesFilter(PackageInfo packageInfo)
+		private bool MatchesFilter(SoftwareBundleInfo packageInfo)
 		{
-			if (!packageInfo.Name.Like(filter.Name))
+            if (!packageInfo.Name.Like(filter.Name))
 			{
 				return false;
 			}

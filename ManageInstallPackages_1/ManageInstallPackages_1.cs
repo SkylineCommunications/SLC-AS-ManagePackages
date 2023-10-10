@@ -10,7 +10,7 @@ namespace ManageInstallPackages_1
 	using Skyline.DataMiner.Automation;
 	using Skyline.DataMiner.Net.Messages;
 	using Skyline.DataMiner.Utils.InteractiveAutomationScript;
-	using Skyline.DataMiner.Utils.Packages;
+	using Skyline.DataMiner.Utils.SoftwareBundle;
 
 	/// <summary>
 	/// Represents a DataMiner Automation script.
@@ -30,7 +30,7 @@ namespace ManageInstallPackages_1
 			controller = new InteractiveController(engine);
 			engine.Timeout = new TimeSpan(1, 0, 0);
 
-			PackageInfo filter = GetFilterFromInput(engine, engine.GetScriptParam("Filter").Value);
+			SoftwareBundleInfo filter = GetFilterFromInput(engine, engine.GetScriptParam("Filter").Value);
 			string folderPath = @"C:\Skyline DataMiner\Documents\DMA_COMMON_DOCUMENTS\InstallPackages";
 
 			try
@@ -112,11 +112,11 @@ namespace ManageInstallPackages_1
 			engine.GenerateInformation(message);
 		}
 
-		private PackageInfo GetFilterFromInput(IEngine engine, string input)
+		private SoftwareBundleInfo GetFilterFromInput(IEngine engine, string input)
 		{
 			try
 			{
-				var filter = JsonConvert.DeserializeObject<PackageInfo>(input);
+				var filter = JsonConvert.DeserializeObject<SoftwareBundleInfo>(input);
 				if (filter != null)
 				{
 					if (string.IsNullOrWhiteSpace(filter.Name))
@@ -147,7 +147,7 @@ namespace ManageInstallPackages_1
 				engine.GenerateInformation($"Failed to parse input filter: {ex}");
 			}
 
-			return new PackageInfo("*", new SemanticVersion(0, 0, 0), "*", "*");
+			return new SoftwareBundleInfo("*", new SemanticVersion(0, 0, 0), "*", "*");
 		}
 	}
 }

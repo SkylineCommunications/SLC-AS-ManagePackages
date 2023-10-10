@@ -5,7 +5,7 @@ namespace ManageInstallPackages_1.PackageOverview
     using System.Collections.Generic;
     using Skyline.DataMiner.Automation;
     using Skyline.DataMiner.Utils.InteractiveAutomationScript;
-    using Skyline.DataMiner.Utils.Packages;
+    using Skyline.DataMiner.Utils.SoftwareBundle;
 
     internal class ManagePackagesView : Dialog
     {
@@ -37,7 +37,7 @@ namespace ManageInstallPackages_1.PackageOverview
 
         public TableSelection Packages { get; set; }
 
-        public void Initialize(Dictionary<string, PackageInfo> packages)
+        public void Initialize(Dictionary<string, SoftwareBundleInfo> packages)
         {
             Clear();
             if (Packages != null)
@@ -65,7 +65,7 @@ namespace ManageInstallPackages_1.PackageOverview
             return Packages.Selected;
         }
 
-        private Dictionary<string, Widget[]> GetTableRowsFromPackagePaths(Dictionary<string, PackageInfo> packages)
+        private Dictionary<string, Widget[]> GetTableRowsFromPackagePaths(Dictionary<string, SoftwareBundleInfo> packages)
         {
             Dictionary<string, Widget[]> tableRows = new Dictionary<string, Widget[]>();
             foreach (var package in packages)

@@ -17,7 +17,7 @@
 	<ItemGroup>
 		<PackageReference Include="Skyline.DataMiner.Dev.Automation" Version="10.3.8" />
 		<PackageReference Include="Skyline.DataMiner.Utils.InteractiveAutomationScriptToolkit" Version="6.1.0" />
-		<PackageReference Include="Skyline.DataMiner.Utils.Packages" Version="1.0.0-1.0.0.X.3" />
+		<PackageReference Include="Skyline.DataMiner.Utils.SoftwareBundles" Version="1.0.1-alpha" />
 	</ItemGroup>
 	<ProjectExtensions>
 	    <VisualStudio>

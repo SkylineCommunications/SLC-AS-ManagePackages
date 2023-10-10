@@ -5,7 +5,7 @@
 	using System.IO;
 	using System.Linq;
 	using Skyline.DataMiner.Automation;
-	using Skyline.DataMiner.Utils.Packages;
+	using Skyline.DataMiner.Utils.SoftwareBundle;
 
 	internal class UploadController
 	{
@@ -57,15 +57,15 @@
 
 				try
 				{
-					var zipped = Packages.GetZippedPackage(file);
-					string packageFolderPath = Path.Combine(folderPath, zipped.PackageInfo.Name, zipped.PackageInfo.Version.ToString());
+					var zipped = SoftwareBundles.GetZippedSoftwareBundle(file);
+					string packageFolderPath = Path.Combine(folderPath, zipped.SoftwareBundleInfo.Name, zipped.SoftwareBundleInfo.Version.ToString());
 					if (Directory.Exists(packageFolderPath))
 					{
 						Directory.Delete(packageFolderPath, true);
 					}
 
 					Directory.CreateDirectory(packageFolderPath);
-					zipped.CreateUnzippedPackage(packageFolderPath);
+					zipped.CreateUnzippedSoftwareBundle(packageFolderPath);
 					zipped.Delete();
 					UnzippedPackages.Add(file);
 				}

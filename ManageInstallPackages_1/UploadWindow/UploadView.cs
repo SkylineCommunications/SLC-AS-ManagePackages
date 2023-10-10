@@ -3,7 +3,7 @@
 	using System.Collections.Generic;
 	using Skyline.DataMiner.Automation;
 	using Skyline.DataMiner.Utils.InteractiveAutomationScript;
-	using Skyline.DataMiner.Utils.Packages;
+	using Skyline.DataMiner.Utils.SoftwareBundle;
 
 	internal class UploadView : Dialog
 	{
